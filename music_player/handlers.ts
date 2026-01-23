@@ -246,7 +246,7 @@ function refreshMusicForNextTurn(playDelayMS = 0) {
 
   const refreshMusic = () => {
     musicSettings.themeType = getCurrentThemeType();
-    if (!musicSettings.seamlessLoopsInMirrors) restartTheme();
+    if (!musicSettings.seamlessLoopsInMirrors && !hasGameEnded()) restartTheme(); 
     if (musicSettings.playIntroEveryTurn) {
       specialIntroMap.clear();
     } else {
