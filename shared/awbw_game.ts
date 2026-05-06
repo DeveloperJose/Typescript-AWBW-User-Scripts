@@ -309,7 +309,8 @@ export abstract class currentPlayer {
     const myLoss = myInfo?.players_eliminated === "Y";
     const endedToday = didGameEndToday();
     const isSpectator = isPlayerSpectator(myID);
-    const isDraw = hasGameEnded() && Object.values(playersInfo).filter((info) => info.players_eliminated === "N").length === 0;
+    const isDraw =
+      hasGameEnded() && Object.values(playersInfo).filter((info) => info.players_eliminated === "N").length === 0;
     const endGameTheme = isSpectator || myWin || isDraw ? SpecialCOs.Victory : SpecialCOs.Defeat;
 
     // Play victory/defeat themes after the game ends for everyone
