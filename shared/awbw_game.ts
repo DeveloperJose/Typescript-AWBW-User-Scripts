@@ -194,7 +194,7 @@ export function hasGameEnded() {
   // Count how many players are still in the game
   if (typeof playersInfo === "undefined") return false;
   const numberOfRemainingPlayers = Object.values(playersInfo).filter((info) => info.players_eliminated === "N").length;
-  return numberOfRemainingPlayers === 1;
+  return numberOfRemainingPlayers <= 1;
 }
 
 export function getCOImagePrefix() {
@@ -309,7 +309,8 @@ export abstract class currentPlayer {
     const myLoss = myInfo?.players_eliminated === "Y";
     const endedToday = didGameEndToday();
     const isSpectator = isPlayerSpectator(myID);
-    const endGameTheme = isSpectator || myWin ? SpecialCOs.Victory : SpecialCOs.Defeat;
+    const isDraw = hasGameEnded() && Object.values(playersInfo).filter((info) => info.players_eliminated === "N").length === 0;
+    const endGameTheme = isSpectator || myWin || isDraw ? SpecialCOs.Victory : SpecialCOs.Defeat;
 
     // Play victory/defeat themes after the game ends for everyone
 

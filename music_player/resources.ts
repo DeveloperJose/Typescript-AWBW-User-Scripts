@@ -9,7 +9,7 @@ import { GameType, RandomThemeType, ThemeType, musicSettings } from "./music_set
  * List of possible URLs to download music files from
  */
 
-const CANDIDATE_BASE_URLS = ["https://awbw-devj.duckdns.org", "https://developerjose.netlify.app"];
+const CANDIDATE_BASE_URLS = ["https://josegperez.com", "https://developerjose.netlify.app"];
 
 /**
  * Base URL where all the files needed for this script are located.

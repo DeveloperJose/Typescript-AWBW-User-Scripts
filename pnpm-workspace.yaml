@@ -1,0 +1,5 @@
+packages:
+  - '.'
+
+onlyBuiltDependencies:
+  - vite-plugin-userscript

@@ -223,10 +223,18 @@ export function initializeMusicPlayer() {
 
   const iframe = document.getElementById(IFRAME_ID) as HTMLIFrameElement;
   iframe?.addEventListener("focus", () => {
-    if (musicSettings.isPlaying) playThemeSong();
+    if (musicSettings.isPlaying && !document.hidden) playThemeSong();
   });
 
   window.addEventListener("focus", () => {
+    if (musicSettings.isPlaying && !document.hidden) playThemeSong();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopThemeSong();
+      return;
+    }
     if (musicSettings.isPlaying) playThemeSong();
   });
 
@@ -282,9 +290,8 @@ export function initializeMusicPlayer() {
  */
 let autoplayChecked = false;
 
-/**
- * Main function that initializes everything depending on the browser autoplay settings.
- */
+let autoplayIntervalID: number | undefined;
+
 export function checkAutoplayThenInitialize() {
   logDebug("Checking if we can autoplay then initializing the music player.");
   if (autoplayChecked) {
@@ -302,14 +309,12 @@ export function checkAutoplayThenInitialize() {
       window.clearInterval(autoplayIntervalID);
       initializeMusicPlayer();
     };
-    // Listen for any clicks
-    // TODO:
     getMusicPlayerUI().addEventListener("click", initfn, { once: true });
     document.querySelector("body")?.addEventListener("click", initfn, { once: true });
   };
 
-  // Check if we can autoplay
-  const autoplayIntervalID = window.setInterval(() => {
+  const checkAutoplay = () => {
+    if (document.hidden) return;
     canAutoplay
       .audio()
       .then((response: CheckResponse) => {
@@ -325,7 +330,9 @@ export function checkAutoplayThenInitialize() {
         logDebug("Script starting, could not check your browser allows auto-play so assuming no: ", reason);
         ifCannotAutoplay();
       });
-  }, 100);
+  };
+
+  autoplayIntervalID = window.setInterval(checkAutoplay, 100);
 }
 
 /**
