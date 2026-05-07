@@ -53,9 +53,7 @@ function get_awbw_menu() {
   >
     <span class="game-tools-btn-text small_text" id="music_player_hover" style="display: none"></span>
     <div class="game-tools-bg" id="music_player_background" style="">
-      <a class="norm2"
-        ><img src="https://developerjose.netlify.app/img/music-player-icon.png" id="music_player_button-image"
-      /></a>
+      <a class="norm2"><img src="https://josegperez.com/img/music-player-icon.png" id="music_player_button-image" /></a>
     </div>
     <div class="cls-settings-menu" id="music_player_settings" style="z-index: 30; display: none">
       <div class="cls-horizontal-box">
@@ -291,4 +289,5 @@ function get_awbw_menu() {
       <label id="music_player_version">Version: 5.2.0 (DeveloperJose Edition)</label>
     </div>
   </div>
-</template> --> -->
+</template> -->
+-->

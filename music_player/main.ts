@@ -306,7 +306,7 @@ export function checkAutoplayThenInitialize() {
 
   const ifCannotAutoplay = () => {
     const initfn = () => {
-      window.clearInterval(autoplayIntervalID);
+      if (autoplayIntervalID) window.clearInterval(autoplayIntervalID);
       initializeMusicPlayer();
     };
     getMusicPlayerUI().addEventListener("click", initfn, { once: true });
@@ -315,6 +315,7 @@ export function checkAutoplayThenInitialize() {
 
   const checkAutoplay = () => {
     if (document.hidden) return;
+    if (autoplayIntervalID) window.clearInterval(autoplayIntervalID);
     canAutoplay
       .audio()
       .then((response: CheckResponse) => {
@@ -323,7 +324,6 @@ export function checkAutoplayThenInitialize() {
 
         if (result) {
           ifCanAutoplay();
-          window.clearInterval(autoplayIntervalID);
         } else ifCannotAutoplay();
       })
       .catch((reason) => {
@@ -332,7 +332,8 @@ export function checkAutoplayThenInitialize() {
       });
   };
 
-  autoplayIntervalID = window.setInterval(checkAutoplay, 100);
+  if (document.hidden) autoplayIntervalID = window.setInterval(checkAutoplay, 1000);
+  else checkAutoplay();
 }
 
 /**

@@ -1,16 +1,14 @@
 {
-  "name": "Improved AWBW Music Player",
-  "description": "An improved version of the comprehensive audio player that attempts to recreate the cart experience with more sound effects, more music, and more customizability.",
-  "author": "DeveloperJose, _twiggy",
-  "match": [
-    "https://awbw.amarriner.com/*"
-  ],
-  "icon": "https://developerjose.netlify.app/img/music-player-icon.png",
-  "namespace": "https://awbw.amarriner.com/",
-  "require": [
+  name: "Improved AWBW Music Player",
+  description: "An improved version of the comprehensive audio player that attempts to recreate the cart experience with more sound effects, more music, and more customizability.",
+  author: "DeveloperJose, _twiggy",
+  match: ["https://awbw.amarriner.com/*"],
+  icon: "https://josegperez.com/img/music-player-icon.png",
+  namespace: "https://awbw.amarriner.com/",
+  require: [
     "https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js",
     "https://cdn.jsdelivr.net/npm/spark-md5@3.0.2/spark-md5.min.js",
     "https://cdn.jsdelivr.net/npm/can-autoplay@3.0.2/build/can-autoplay.min.js",
   ],
-  "run-at": "document-end"
+  "run-at": "document-end",
 }

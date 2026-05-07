@@ -9,7 +9,7 @@ import { GameType, RandomThemeType, ThemeType, musicSettings } from "./music_set
  * List of possible URLs to download music files from
  */
 
-const CANDIDATE_BASE_URLS = ["https://josegperez.com", "https://developerjose.netlify.app"];
+const CANDIDATE_BASE_URLS = ["https://josegperez.com"];
 
 /**
  * Base URL where all the files needed for this script are located.
@@ -22,7 +22,7 @@ let BASE_URL: string;
 export async function getWorkingBaseURL() {
   for (const url of CANDIDATE_BASE_URLS) {
     try {
-      const res = await fetch(`${url}/img/music-player-icon.png`, { method: "HEAD" });
+      const res = await fetch(`${url}/img/music-player-icon.png`, { method: "HEAD", cache: "no-store" });
       if (res.ok) {
         BASE_URL = url;
         return url;

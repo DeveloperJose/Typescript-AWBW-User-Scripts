@@ -4,12 +4,12 @@
 // @namespace       https://awbw.amarriner.com/
 // @author          DeveloperJose, _twiggy
 // @match           https://awbw.amarriner.com/*
-// @icon            https://developerjose.netlify.app/img/music-player-icon.png
+// @icon            https://josegperez.com/img/music-player-icon.png
 // @require         https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js
 // @require         https://cdn.jsdelivr.net/npm/spark-md5@3.0.2/spark-md5.min.js
 // @require         https://cdn.jsdelivr.net/npm/can-autoplay@3.0.2/build/can-autoplay.min.js
 // @run-at          document-end
-// @version         5.29.0
+// @version         5.29.1
 // @supportURL      https://github.com/DeveloperJose/JS-AWBW-User-Scripts/issues
 // @contributionURL https://ko-fi.com/developerjose
 // @license         MIT
@@ -983,7 +983,7 @@ var awbw_music_player = (function (exports, canAutoplay2, SparkMD52) {
     return ScriptName2;
   })(ScriptName || {});
   const versions = /* @__PURE__ */ new Map([
-    ["music_player", "5.29.0"],
+    ["music_player", "5.29.1"],
     ["highlight_cursor_coordinates", "2.3.0"],
   ]);
   const updateURLs = /* @__PURE__ */ new Map([
@@ -1724,12 +1724,12 @@ var awbw_music_player = (function (exports, canAutoplay2, SparkMD52) {
   function notifyCOSelectorListeners(coName) {
     coSelectorListeners.forEach((listener) => listener(coName));
   }
-  const CANDIDATE_BASE_URLS = ["https://josegperez.com", "https://developerjose.netlify.app"];
+  const CANDIDATE_BASE_URLS = ["https://josegperez.com"];
   let BASE_URL;
   async function getWorkingBaseURL() {
     for (const url of CANDIDATE_BASE_URLS) {
       try {
-        const res = await fetch(`${url}/img/music-player-icon.png`, { method: "HEAD" });
+        const res = await fetch(`${url}/img/music-player-icon.png`, { method: "HEAD", cache: "no-store" });
         if (res.ok) {
           BASE_URL = url;
           return url;
@@ -4021,7 +4021,7 @@ var awbw_music_player = (function (exports, canAutoplay2, SparkMD52) {
     const ifCannotAutoplay = () => {
       var _a;
       const initfn = () => {
-        window.clearInterval(autoplayIntervalID);
+        if (autoplayIntervalID) window.clearInterval(autoplayIntervalID);
         initializeMusicPlayer();
       };
       getMusicPlayerUI().addEventListener("click", initfn, { once: true });
@@ -4029,6 +4029,7 @@ var awbw_music_player = (function (exports, canAutoplay2, SparkMD52) {
     };
     const checkAutoplay = () => {
       if (document.hidden) return;
+      if (autoplayIntervalID) window.clearInterval(autoplayIntervalID);
       canAutoplay2
         .audio()
         .then((response) => {
@@ -4036,7 +4037,6 @@ var awbw_music_player = (function (exports, canAutoplay2, SparkMD52) {
           logDebug("Script starting, does your browser allow you to auto-play:", result);
           if (result) {
             ifCanAutoplay();
-            window.clearInterval(autoplayIntervalID);
           } else ifCannotAutoplay();
         })
         .catch((reason) => {
@@ -4044,7 +4044,8 @@ var awbw_music_player = (function (exports, canAutoplay2, SparkMD52) {
           ifCannotAutoplay();
         });
     };
-    autoplayIntervalID = window.setInterval(checkAutoplay, 100);
+    if (document.hidden) autoplayIntervalID = window.setInterval(checkAutoplay, 1e3);
+    else checkAutoplay();
   }
   async function main() {
     if (self !== top) return;
